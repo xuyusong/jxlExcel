@@ -163,7 +163,14 @@ public class BeginReadText {
 						oldLogs.add(emmcLog2);
 				}
 			}
+		}else{
+			List<EmmcLog> tmp = emmcLogs;
+			for (EmmcLog emmcLog1 : tmp) {
+				if(!oldLogs.contains(emmcLog1))
+					oldLogs.add(emmcLog1);
+			}
 		}
+		
 		Comparator<EmmcLog> c2 = new Comparator<EmmcLog>(){
 
 			@Override

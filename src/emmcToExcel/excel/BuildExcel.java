@@ -251,7 +251,6 @@ public class BuildExcel {
 			Matcher matcher = pattern.matcher(data);
 			while(matcher.find()){
 				if(!matcher.group(1).trim().equals("")){
-					System.out.println(matcher.group(1).trim());
 					res = res+Integer.parseInt(matcher.group(1).trim())*1024;
 				}
 			}

@@ -38,17 +38,17 @@ public class ReadTextToData {
                 List<LogProcess> over1m = null;
                 Map<String,LogProcess> allProcess = new HashMap<String,LogProcess>();
                 while((lineTxt =bufferedReader.readLine()) != null){
-                	//System.out.println(lineTxt.trim());
                 	if(lineTxt.trim() != null && !lineTxt.trim().equals("") ){
                 		if(isFirstChinese(lineTxt.trim())){
-                				pattern = Pattern.compile("..[\u4e00-\u9fa5]*([0-9]*)[\u4e00-\u9fa5]*([0-9]*).*$");
+                				pattern = Pattern.compile("[\u4e00-\u9fa5]*([0-9]*)[\u4e00-\u9fa5]*([0-9]*).*$");
                 				matcher = pattern.matcher(lineTxt);
                 				while(matcher.find()){
-                					if(!matcher.group(1).equals("")){
+                					if(!matcher.group(1).trim().equals("")){
                 						emmcLog.setId(Integer.parseInt(matcher.group(1)));
     	        					}
-                					if(!matcher.group(2).equals(""))
+                					if(!matcher.group(2).trim().equals("")){
                 						emmcLog.setNumber(Integer.parseInt(matcher.group(2)));
+                					}
     	        				}
 							}
                 		}
@@ -57,7 +57,7 @@ public class ReadTextToData {
                 				pattern = Pattern.compile(".*is.([0-9]*).min.*data:([0-9]*)$");
                 				matcher = pattern.matcher(lineTxt);
                 				while(matcher.find()){
-                					if(!matcher.group(1).equals("")&&!matcher.group(2).equals("")){
+                					if(!matcher.group(1).trim().equals("")&&!matcher.group(2).trim().equals("")){
 	                					if(Integer.parseInt(matcher.group(1))<emmcLog.getTotalTime()){
 	                						lastMaxTime = emmcLog.getTotalTime()+lastMaxTime;
 	                						lastMaxData = emmcLog.getTotalData()+lastMaxData;
@@ -73,7 +73,7 @@ public class ReadTextToData {
                 				over1m = emmcLog.getOver1M();
                 				LogProcess logProcess = new LogProcess();
                 				while(matcher.find()){
-                					if(!matcher.group(1).equals("")&&!matcher.group(2).equals("")&&!matcher.group(3).equals("")&&!matcher.group(4).equals("")){
+                					if(!matcher.group(1).trim().equals("")&&!matcher.group(2).trim().equals("")&&!matcher.group(3).trim().equals("")&&!matcher.group(4).trim().equals("")){
 	                					String time = matcher.group(1);
 	                					int pid = Integer.parseInt(matcher.group(2));
 	                					int emmc = Integer.parseInt(matcher.group(3));
@@ -98,7 +98,6 @@ public class ReadTextToData {
                 					}
                 				}
                 				emmcLog.setOver1M(over1m);
-                				
                 			}
                 		}
                 	}
